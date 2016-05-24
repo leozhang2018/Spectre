@@ -6,10 +6,10 @@ eth0_IP="..."
 eth1_IP="192.168.1.1"
 
 #ss-tunnel DNS 请求监听端口
-ss-tunnel_port="7913"
+ss_tunnel_port="7913"
 
 #ss-tunnel DNS 转发地址及端口
-ss-tunnel_address="8.8.4.4:53"
+ss_tunnel_address="8.8.4.4:53"
 
 
 #shadowsocks.json 配置文件地址
@@ -37,8 +37,8 @@ iptables -t nat -A POSTROUTING -j SNAT --to-source $eth0_IP
 
 
 #NAT 网络连通测试
-testfile=/home/xiyounet/pingtest.txt	#临时测试文件转存地址
-ping -c3 123.125.114.144 > ${testfile} 	#Ping baidu.com 结果转存至pingtest.txt
+testfile=$(pwd)/pingtest.txt	#临时测试文件转存地址当前路径
+ping -c3 123.125.114.144 > ${testfile} 	#Ping baidu.com 结果转存至 pingtest.txt
 testing=$(grep "time " ${testfile})   	#检测是否 ping 成功出现 time
 if [ "${testing}" != "" ]; then
         echo "Service NAT start success/n"
