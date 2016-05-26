@@ -1353,6 +1353,7 @@ iptables -t nat -I SHADOWSOCKS -d 45.251.0.0/22 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 45.251.8.0/22 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 45.251.16.0/22 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 45.251.20.0/22 -j RETURN
+iptables -t nat -I SHADOWSOCKS -d 45.251.52.0/22 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 47.92.0.0/14 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 47.96.0.0/11 -j RETURN
 iptables -t nat -I SHADOWSOCKS -d 49.4.0.0/14 -j RETURN
