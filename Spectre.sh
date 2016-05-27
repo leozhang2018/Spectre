@@ -51,7 +51,7 @@ iptables -t nat -A SHADOWSOCKS -d $server_IP6 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d $server_IP7 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d $server_IP8 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d $server_IP9 -j RETURN
-echo -e "Create shadowsocks chain success"
+echo -e "Create shadowsocks chain success \n"
 
 ## 局域网 IP
 iptables -t nat -A SHADOWSOCKS -d 240.0.0.0/4 -j RETURN
@@ -62,21 +62,38 @@ iptables -t nat -A SHADOWSOCKS -d 127.0.0.0/8 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d 10.0.0.0/8 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d 192.168.0.0/16 -p tcp -j RETURN
-echo -e "Input LAN IP success/n"
+echo -e "Input LAN IP success \n"
 
 # 将其他 IP 导向 SS
 iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1080
 # 将所有 tcp 数据包 导向 SHADOWSOCKS 规则
 iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
-echo -e "Shadowsocks chain start"
+echo -e "Shadowsocks chain start \n"
 
 # 开启 tcp 包转发
 nohup ss-redir -c $configfile_path -d start >/dev/null 2>&1&
-echo -e "Service ss-redir start"
+echo -e "Service ss-redir start \n"
 
 ## 载入 CN iptable 设置
 source ./$save_to_file
 
 echo -e "Input China IP rules success"
+
+
+##检查 ss-tunnel 守护进程是否写入 Crontab 函数 CrontabCheck
+CheckCrontab(){
+	testing=`crontab -l | grep ss-tunnel_alive.sh`  	#检测 crontab 是否存在 Update-iptables.sh
+	if [ "$testing" != "" ]; then
+					exit 0
+	else
+			  file_location=$(pwd)/ss-tunnel_alive.sh
+				echo '0,15 5-23 * * * sh' $file_location >> /var/spool/cron/crontabs/root
+				echo -e "写入 ss-tunnel 守护脚本至 Crontab 完毕 时间设置 0,15 5-23 * * * sh \n"
+	fi
+}
+
+#调用 CheckCrontab
+CheckCrontab
+
 echo -e "All done"
 exit 0
