@@ -7,7 +7,7 @@
 # 使用 bash 命令来执行它。 /bin/bash /path/to/script
 
 #载入配置文件
-source ./config.conf
+. /Spectre/config.conf
 
 #获取 iptable 函数 CurlIptable
 CurlIptable(){
@@ -17,39 +17,20 @@ CurlIptable(){
 
 ##检查 Crontab 函数 CrontabCheck
 CheckCrontab(){
-	testing=`crontab -l | grep Update-iptables.sh`  	#检测 crontab 是否存在 Update-iptables.sh
-	if [ "$testing" != "" ]; then
-					exit
+	cron="/etc/cron.d/Update-iptables"  	#检测 crontab 是否存在 Update-iptables.sh
+	if test -s $cron ;then
+		exit 0
 	else
-			echo "$testing"
-			echo "检测尚未写入 Crontab,是否写入以进行定时自动更新?(yes or no)"
-			read input
-			file_location=$(pwd)/Update-iptables.sh
-				if [ "$input" == "yes" -o "$input" == "Yes" ]; then
-				#每个月总有那么一次
-				echo '* * 1 * * sh' $file_location >> /var/spool/cron/crontabs/root
-				echo -e "写入 Crontab 完毕 时间设置 0,45 5-23 * * * sh"
-				else
-						exit 0
-				fi
+		file_location=/Spectre/crontasks/Update-iptables.sh
+		#每个月总有那么一次
+		echo '* * 1 * * root bash' $file_location '/dev/null 2>&1' >> /etc/cron.d/Update-iptables
 	fi
 }
 
-#更新 iptable 函数 UpdateList
+#定时更新 iptable 函数 UpdateList
 UpdateList(){
-		if test -s $save_to_file ;then
-			echo '文件已经存在是否进行更新? (yes or no)'
-			read input
-			## -o 或运算 -a 与运算
-		     	 if [ "$input" == "yes" -o "$input" == "Yes" ]; then
-		        	  CurlIptable
-		     	 else
-		         	  exit 0
-		     	 fi
-		else
 			CurlIptable
 			CheckCrontab
-		fi
 }
 #调用 UpdateList 函数
 UpdateList

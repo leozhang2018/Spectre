@@ -1,6 +1,6 @@
 #!/bin/bash
 # 载入配置文件
-source ./config.conf
+. /Spectre/config.conf
 
 # 关闭 dnsmasq 服务，清理 DNS 缓存
 service dnsmasq stop
@@ -31,7 +31,7 @@ service dnsmasq start
 echo -e "Service dnsmasq start success \n"
 
 # 开启 ss-tunnel 准备 DNS 转发
-nohup ss-tunnel -c $configfile_path -l $ss_tunnel_port -u -L $ss_tunnel_address > /dev/null 2>&1&
+nohup /usr/local/bin/ss-tunnel -c $configfile_path -l $ss_tunnel_port -u -L $ss_tunnel_address > /dev/null 2>&1&
 echo -e "Service ss-tunnel start \n "
 
 ## 建立 SHADOWSOCKS 规则链
@@ -71,24 +71,24 @@ iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
 echo -e "Shadowsocks chain start \n"
 
 # 开启 tcp 包转发
-nohup ss-redir -c $configfile_path -d start >/dev/null 2>&1&
+nohup /usr/local/bin/ss-redir -c $configfile_path -d start >/dev/null 2>&1&
 echo -e "Service ss-redir start \n"
 
 ## 载入 CN iptable 设置
-source ./$save_to_file
+. $save_to_file
 
 echo -e "Input China IP rules success"
 
 
 ##检查 ss-tunnel 守护进程是否写入 Crontab 函数 CrontabCheck
 CheckCrontab(){
-	testing=`crontab -l | grep ss-tunnel_alive.sh`  	#检测 crontab 是否存在 Update-iptables.sh
-	if [ "$testing" != "" ]; then
-					exit 0
+	cron="/etc/cron.d/ss-tunnel_alive"  	#检测 crontab 是否存在 Update-iptables.sh
+	if test -s $cron ;then
+				exit 0
 	else
-			  file_location=$(pwd)/ss-tunnel_alive.sh
-				echo '0,15 5-23 * * * sh' $file_location >> /var/spool/cron/crontabs/root
-				echo -e "写入 ss-tunnel 守护脚本至 Crontab 完毕 时间设置 0,15 5-23 * * * sh \n"
+			 	file_location=/Spectre/crontasks/ss-tunnel_alive.sh
+				echo '*/1 * * * * root bash' $file_location '>/dev/null 2>&1' >> /etc/cron.d/ss-tunnel_alive
+				echo -e "写入 ss-tunnel 守护脚本至 Crontab 完毕 时间设置 */1 * * * * sh"
 	fi
 }
 
