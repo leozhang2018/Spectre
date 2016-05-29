@@ -4,7 +4,7 @@
 
 ## ipv4_CN iptable 的定时自动更新函数
 IptableIntoCrontab(){
-	cron="/etc/cron.d/Update-iptables"  	#检测 crontab 是否存在 Update-iptables.sh
+	cron="/etc/cron.d/Update-iptables" #检测 crontab 是否存在 Update-iptables.sh
 	if test -s $cron ;then
 					exit
 	else
@@ -22,7 +22,6 @@ IptableIntoCrontab(){
 }
 
 ##复制程序目录
-
 sudo cp -R Spectre /Spectre
 
 ##更改权限
