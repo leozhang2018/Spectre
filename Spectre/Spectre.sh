@@ -14,7 +14,7 @@ iptables -t nat -A POSTROUTING -j SNAT --to-source $eth0_IP
 
 
 # NAT 网络连通测试
-testfile=$(pwd)/pingtest.tx
+testfile=$(pwd)/pingtest.txt
 ping -c3 123.125.114.144 > ${testfile} #Ping baidu 结果转存至pingtest.txt
 testing=$(grep "time " ${testfile})   #检测是否 ping 成功出现 time
 if [ "${testing}" != "" ]; then
