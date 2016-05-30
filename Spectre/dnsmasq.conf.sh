@@ -1,3 +1,10 @@
+#!/bin/bash
+# dnsmasq 配置文件 
+
+# 载入 Spectre 配置文件
+. /Spectre/config.conf
+
+cat <<EOF
 # Configuration file for dnsmasq.
 #
 # Format is one option per line, legal options are the same
@@ -638,8 +645,9 @@ conf-dir=/etc/dnsmasq.d
 
 # 指定 dnsmasq 监听接口 (DHCP+DNS)
 # 可换行添加多个接口
-interface=eth1
+interface=$p4p1_ns
 
 # 不监听的接口
 #except-interface=
 
+EOF
