@@ -81,7 +81,7 @@ echo -e "Input China IP rules success"
 
 
 ##检查 ss-tunnel 守护进程是否写入 Crontab 函数 CrontabCheck
-CheckCrontab(){
+function CheckCrontab(){
 	cron="/etc/cron.d/ss-tunnel_alive"  	#检测 crontab 是否存在 Update-iptables.sh
 	if test -s $cron ;then
 				exit 0

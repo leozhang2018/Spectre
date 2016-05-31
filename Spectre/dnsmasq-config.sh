@@ -18,6 +18,7 @@ if which dnsmasq > /dev/null;then
   # 如果已经安装 dnsmasq
 	echo -e "Dnsmasq exists \n"
       #检测 dnsmasq 是否运行
+      #systemd
 	if  service dnsmasq status|grep "Active: active" >> /dev/null ;then #Bug
       #若运行则停止服务
       sudo service dnsmasq stop
