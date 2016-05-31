@@ -10,13 +10,13 @@
 source ./config.conf
 
 #获取 iptable 函数 CurlIptable
-CurlIptable(){
+function CurlIptable(){
 	## 指定作用域分隔符为 '|',同时计算子网掩码位数之后进行拼接(http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2858470.html)
 	curl $Delegated_apnic_latest_URL | grep 'apnic|CN|ipv4' | awk -F '|' '/CN/&&/ipv4/ {print "iptables -t nat -I SHADOWSOCKS -d " $4 "/" 32-log($5)/log(2)  " -j RETURN" }'|cat > $save_to_file
 }
 
 ##检查 Crontab 函数 CrontabCheck
-CheckCrontab(){
+function CheckCrontab(){
 	cron="/etc/cron.d/Update-iptables"  	#检测 crontab 是否存在 Update-iptables.sh
 	if test -s $cron ;then
 					exit
@@ -36,7 +36,7 @@ CheckCrontab(){
 }
 
 #更新 iptable 函数 UpdateList
-UpdateList(){
+function UpdateList(){
 		if test -s $save_to_file ;then
 			echo '文件已经存在是否进行更新? (yes or no)'
 			read input
