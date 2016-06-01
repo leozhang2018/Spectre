@@ -7,23 +7,24 @@
 # 载入 dnsmasq 配置函数
 function dnsmasqImportConf(){
 
-	  # 载入 dnsmasq 配置
-    . /Spectre/dnsmasq.conf.sh >> /etc/dnsmasq2.conf
-
+# 载入 dnsmasq 配置
+ . /Spectre/dnsmasq.conf.sh >> /etc/dnsmasq.conf
+echo -e "dnamasq 配置载入完毕 \n"
 }
 
 function dnsmasqCheck(){
-
-if which dnsmasq > /dev/null;then
-  # 如果已经安装 dnsmasq
-	echo -e "Dnsmasq exists \n"
+# Bug 如何判断 dnsmasq 已经安装,应该避免使用 which
+#http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+if command -v dnsmasq > /dev/null;then
+      # 如果已经安装 dnsmasq
+      echo -e "Dnsmasq exists \n"
       #检测 dnsmasq 是否运行
       #systemd
-	if  service dnsmasq status|grep "Active: active" >> /dev/null ;then #Bug
+      if  service dnsmasq status|grep "Active: active" >> /dev/null ;then #Bug
       #若运行则停止服务
       sudo service dnsmasq stop
       #载入 dnsmasq 配置
-    	dnsmasqImportConf
+      dnsmasqImportConf
       else
       #载入 dnsmasq 配置
       dnsmasqImportConf
@@ -31,10 +32,10 @@ if which dnsmasq > /dev/null;then
 
 	else
 	   echo -e "Dnsmasq not install \n"
-     #安装 dnsmasq
-	   sudo apt-get update && sudo apt-get install dnsmasq
+           #安装 dnsmasq
+	   sudo apt-get install dnsmasq
 	   #载入 dnsmasq 配置
-     dnsmasqImportConf
+    	   dnsmasqImportConf
 fi
 
 }

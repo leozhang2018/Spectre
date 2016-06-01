@@ -22,8 +22,7 @@ function CheckCrontab(){
 					exit
 	else
 			echo "$testing"
-			echo "检测尚未写入 Crontab,是否写入以进行定时自动更新?(yes or no)"
-			read input
+			read -p "检测尚未写入 Crontab,是否写入以进行定时自动更新?(yes or no):" input
 			file_location=/Spectre/Update-iptables.sh
 				if [ "$input" == "yes" -o "$input" == "Yes" ]; then
 				#每个月总有那么一次
@@ -38,8 +37,8 @@ function CheckCrontab(){
 #更新 iptable 函数 UpdateList
 function UpdateList(){
 		if test -s $save_to_file ;then
-			echo '文件已经存在是否进行更新? (yes or no)'
-			read input
+
+			read -p "文件已经存在是否进行更新? (yes or no):" input
 			## -o 或运算 -a 与运算
 		     	 if [ "$input" == "yes" -o "$input" == "Yes" ]; then
 		        	  CurlIptable

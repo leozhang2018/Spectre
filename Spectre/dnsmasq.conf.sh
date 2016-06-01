@@ -1,8 +1,9 @@
 #!/bin/bash
 # dnsmasq 配置文件 
 
-# 载入 Spectre 配置文件
-. /Spectre/config.conf
+read -p "请输入 dnsmasq 需要监听的网络接口(默认为 eth1): " interface_input
+#默认为 eth1
+interface_input=${interface_input:-eth1}
 
 cat <<EOF
 # Configuration file for dnsmasq.
@@ -645,7 +646,7 @@ conf-dir=/etc/dnsmasq.d
 
 # 指定 dnsmasq 监听接口 (DHCP+DNS)
 # 可换行添加多个接口
-interface=$p4p1_ns
+interface=$interface_input
 
 # 不监听的接口
 #except-interface=
