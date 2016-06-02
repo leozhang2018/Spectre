@@ -2,6 +2,16 @@
 
 ## Spectre 安装文件
 
+
+## root 环境检查函数
+function checkRoot(){
+if [ $UID -ne 0 ]; then
+        echo "非 root 用户请切换至 root 用户执行"
+        exit 1
+fi
+
+}
+
 ## ipv4_CN iptable 的定时自动更新函数
 IptableIntoCrontab(){
 	cron="/etc/cron.d/Update-iptables" #检测 crontab 是否存在 Update-iptables.sh
@@ -21,6 +31,9 @@ IptableIntoCrontab(){
 	fi
 }
 
+# 检查 root 环境
+checkRoot
+
 ##复制程序目录
 sudo cp -R Spectre /Spectre
 
@@ -28,7 +41,7 @@ sudo cp -R Spectre /Spectre
 sudo chmod -R 775 /Spectre
 
 ##将 Spectre.sh 脚本添加至开机启动项
-echo '/Spectre/Spectre.sh \nexit 0'  >> /etc/rc.local
+echo "/Spectre/Spectre.sh \nexit 0"  >> /etc/rc.local
 
 ## 是否进行 ipv4_CN iptable 的定时自动更新
 IptableIntoCrontab

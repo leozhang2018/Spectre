@@ -1,3 +1,11 @@
+#!/bin/bash
+# dnsmasq 配置文件 
+
+read -p "请输入 dnsmasq 需要监听的网络接口(默认为 eth1): " interface_input
+#默认为 eth1
+interface_input=${interface_input:-eth1}
+
+cat <<EOF
 # Configuration file for dnsmasq.
 #
 # Format is one option per line, legal options are the same
@@ -638,8 +646,9 @@ conf-dir=/etc/dnsmasq.d
 
 # 指定 dnsmasq 监听接口 (DHCP+DNS)
 # 可换行添加多个接口
-interface=eth1
+interface=$interface_input
 
 # 不监听的接口
 #except-interface=
 
+EOF

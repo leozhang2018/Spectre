@@ -1,6 +1,50 @@
 #!/bin/bash
+
+## root 环境检查函数
+function checkRoot(){
+if [ $UID -ne 0 ]; then
+        echo "非 root 用户请切换至 root 用户执行"
+        exit 1
+fi
+
+}
+
+
+##检查 ss-tunnel 守护进程是否写入 Crontab 函数 CrontabCheck
+function CheckCrontab(){
+        cron="/etc/cron.d/ss-tunnel_alive"      #检测 crontab 是否存在 Update-iptables.sh
+        if test -s $cron ;then
+                                exit 0
+        else
+                                file_location=/Spectre/crontasks/ss-tunnel_alive.sh
+                                echo '*/1 * * * * root bash' $file_location '>/dev/null 2>&1' >> /etc/cron.d/ss-tunnel_alive
+                                echo -e "写入 ss-tunnel 守护脚本至 Crontab 完毕 时间设置 */1 * * * * sh"
+        fi
+}
+
+
+# NAT 网络连通测试函数 pingtest
+function pingTest(){ 
+        testfile=$(pwd)/pingtest.tx
+        ping -c3 123.125.114.144 > ${testfile} #Ping baidu 结果转存至pingtest.txt
+        testing=$(grep "time " ${testfile})   #检测是否 ping 成功出现 time
+        if [ "${testing}" != "" ]; then
+        echo -e "Service NAT start success \n"
+        rm $testfile
+        fi
+        if [ "${testing}" = "" ]; then
+        echo -e "Oh!! There must be something wrong. :( "
+        exit
+        fi
+}
+
+
+# 检查 root 环境
+checkRoot
+
 # 载入配置文件
 . /Spectre/config.conf
+
 
 # 关闭 dnsmasq 服务，清理 DNS 缓存
 service dnsmasq stop
@@ -13,18 +57,8 @@ iptables -t filter -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -t nat -A POSTROUTING -j SNAT --to-source $eth0_IP
 
 
-# NAT 网络连通测试
-testfile=$(pwd)/pingtest.txt
-ping -c3 123.125.114.144 > ${testfile} #Ping baidu 结果转存至pingtest.txt
-testing=$(grep "time " ${testfile})   #检测是否 ping 成功出现 time
-if [ "${testing}" != "" ]; then
-        echo -e "Service NAT start success \n"
-        rm $testfile
-fi
-if [ "${testing}" = "" ]; then
-        echo -e "Oh!! There must be something wrong. :( "
-        exit
-fi
+## 调用 pingTest 函数
+pingTest
 
 ## 开启　dnsmasq 服务
 service dnsmasq start
@@ -80,19 +114,7 @@ echo -e "Service ss-redir start \n"
 echo -e "Input China IP rules success"
 
 
-##检查 ss-tunnel 守护进程是否写入 Crontab 函数 CrontabCheck
-CheckCrontab(){
-	cron="/etc/cron.d/ss-tunnel_alive"  	#检测 crontab 是否存在 Update-iptables.sh
-	if test -s $cron ;then
-				exit 0
-	else
-			 	file_location=/Spectre/crontasks/ss-tunnel_alive.sh
-				echo '*/1 * * * * root bash' $file_location '>/dev/null 2>&1' >> /etc/cron.d/ss-tunnel_alive
-				echo -e "写入 ss-tunnel 守护脚本至 Crontab 完毕 时间设置 */1 * * * * sh"
-	fi
-}
-
-#调用 CheckCrontab
+#调用 CheckCrontab 函数
 CheckCrontab
 
 echo -e "All done"
