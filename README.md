@@ -46,7 +46,7 @@ Linux Server 改造 X86 网关 FQ 路由器计划
     address 192.168.3.1     #外网出口地址
     netmask 255.255.255.0
 
- 安装 DHCP Server(`sudo apt-get install isc-dhcp-server`)，配置 DHCP 服务器（/etc/dhcp/dhcpd.conf）
+ 安装 DHCP Server(`sudo apt-get install isc-dhcp-server`)，配置 DHCP 服务器（`/etc/dhcp/dhcpd.conf`）
 
 
     #
@@ -189,22 +189,26 @@ Linux Server 改造 X86 网关 FQ 路由器计划
        }
     }
 
-安装 [shadowsocks-libev][1]并根据服务端的配置填写配置文件(/etc/shadowsocks.json)
+安装 [shadowsocks-libev][1] 并根据服务端的配置填写配置文件(`/etc/shadowsocks.json`)
 
-安装 Dnsmasq (Sudo apt-get install dnsmasq)，**无需手动修改配置文件，后期脚本会自动配置，只需安装即可**
+安装 Dnsmasq (`Sudo apt-get install dnsmasq`)，**无需手动修改配置文件，后期脚本会自动配置，只需安装即可**
 
 
 ## Spectre 自动配置程序的安装
 
 SSH 登录服务器，clone 或者 Download 该项目至用户目录：
+
 `git clone https://github.com/leozhang2018/Spectre.git`
 
 切换至该项目目录并执行安装程序:
+
 `cd Spectre`
+
 `sudo ./install.sh`
 
 安装结束后，根据程序提示，编辑根目录下的 `/Spectre/config.conf` 填写配置网络接口以及远端服务器信息
-vim `/Spectre/config.conf`
+
+`vim /Spectre/config.conf`
 
 
     ############################################### Global Config #################################
@@ -251,12 +255,12 @@ vim `/Spectre/config.conf`
 切换至 `/Spectre/dnsmasq-install`，执行 dnsmasq 自动配置程序 `dnsmasq-config.sh`:
 
 `cd /Spectre/dnsmasq-install`
+
 `./dnsmasq-config.sh`
 
 根据程序提示进行配置，至此全部配置工作已经完毕
 
 重启服务器,开机并进行相关测试:
-可通过 `dig twitter.com` 查看相关 DNS 是否被污染.
-同时将设备接入内置网卡接口，测试是否正常访问相关站点
+可通过 `dig twitter.com` 查看相关 DNS 是否被污染.同时将设备接入内置网卡接口，测试是否正常访问相关站点
 
   [1]: https://shadowsocks.org/en/download/clients.html
