@@ -24,7 +24,7 @@ function CheckCrontab(){
 
 
 # NAT 网络连通测试函数 pingtest
-function pingTest(){ 
+function pingTest(){
         testfile=$(pwd)/pingtest.tx
         ping -c3 123.125.114.144 > ${testfile} #Ping baidu 结果转存至pingtest.txt
         testing=$(grep "time " ${testfile})   #检测是否 ping 成功出现 time
@@ -71,7 +71,7 @@ echo -e "Service ss-tunnel start \n "
 ## 建立 SHADOWSOCKS 规则链
 iptables -t nat -N SHADOWSOCKS
 # 不翻墙跳出
-iptables -t nat -A SHADOWSOCKS -s $p2p1_ns -j RETURN
+#iptables -t nat -A SHADOWSOCKS -s $p2p1_ns -j RETURN
 # CN2 Vtrans
 iptables -t nat -A SHADOWSOCKS -d $server_IP0 -j RETURN
 iptables -t nat -A SHADOWSOCKS -d $server_IP1 -j RETURN
