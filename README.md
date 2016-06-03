@@ -189,7 +189,7 @@ Linux Server 改造 X86 网关 FQ 路由器计划
        }
     }
 
-安装 [shadowsocks-libev][1] 并根据服务端的配置填写配置文件(`/etc/shadowsocks.json`)
+安装 [shadowsocks-libev][2] 并根据服务端的配置填写配置文件(`/etc/shadowsocks.json`)
 
 安装 Dnsmasq (`Sudo apt-get install dnsmasq`)，**无需手动修改配置文件，后期脚本会自动配置，只需安装即可**
 
@@ -263,4 +263,19 @@ SSH 登录服务器，clone 或者 Download 该项目至用户目录：
 重启服务器,开机并进行相关测试:
 可通过 `dig twitter.com` 查看相关 DNS 是否被污染.同时将设备接入内置网卡接口，测试是否正常访问相关站点
 
+**dig twitter.com**
+
+![dig twitter.com][3]
+
+**Medium:**
+
+![Medium.com][4]
+
+
+
+
   [1]: https://shadowsocks.org/en/download/clients.html
+  [2]: https://shadowsocks.org/en/download/clients.html
+  [3]: http://leozhang.qiniudn.com/2016-06-03%2022-52-01%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png
+  [4]: http://leozhang.qiniudn.com/2016-06-03%2022-56-24%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png
+  [5]: http://leozhang.qiniudn.com/Screenshot_2016-06-03-23-06-26.png
