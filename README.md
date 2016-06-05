@@ -23,4 +23,4 @@ Linux Server 改造 X86 网关 FQ 路由器计划
 
   [1]: https://shadowsocks.org/en/download/clients.html
   [2]: https://shadowsocks.org/en/download/clients.html
-  [3]:https://github.com/leozhang2018/Spectre/wiki/Spectre-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97
+  [3]: https://github.com/leozhang2018/Spectre/wiki/Spectre-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97
