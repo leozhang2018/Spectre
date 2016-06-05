@@ -16,7 +16,7 @@ fi
 IptableIntoCrontab(){
 	cron="/etc/cron.d/Update-iptables" #检测 crontab 是否存在 Update-iptables.sh
 	if test -s $cron ;then
-					exit
+			echo "更新 iptable 的 Cron 任务已经存在"
 	else
 			echo "是否进行 ipv4_CN iptable 的定时自动更新?(yes or no)"
 			read input
@@ -39,6 +39,9 @@ sudo cp -R Spectre /Spectre
 
 ##更改权限
 sudo chmod -R 775 /Spectre
+
+##开启 IP 数据包转发
+sysctl -w net.ipv4.ip_forward=1 >> /dev/null
 
 ##将 Spectre.sh 脚本添加至开机启动项
 echo "/Spectre/Spectre.sh \nexit 0"  >> /etc/rc.local
