@@ -1,5 +1,7 @@
 #!/bin/bash
 # dnsmasq 配置文件 
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
 
 read -p "请输入 dnsmasq 需要监听的网络接口(默认为 eth1): " interface_input
 #默认为 eth1

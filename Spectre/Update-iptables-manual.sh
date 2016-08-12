@@ -1,10 +1,15 @@
 #!/bin/bash
+
 #iptable-更新(中国区 IP 段)
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
+
+
 # 注意: if [ "" ] 前后有空格
 # 从shell脚本调用另一个shell脚本 http://stackoverflow.com/questions/8352851/how-to-call-shell-script-from-another-shell-script
 # 首先是其他脚本成为可执行文件， 则添加 #!/bin/bash 在文件的路径在顶部， 并且为$PAth环境变量。 然后可以调用其作为一个普通的命令。
 # Call其与 source 命令( 别名是 . ) 像这样 source /path/to/script .
-# 使用 bash 命令来执行它。 /bin/bash /path/to/script
+
 
 #载入配置文件
 source ./config.conf

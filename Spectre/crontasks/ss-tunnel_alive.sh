@@ -1,5 +1,8 @@
 #!/bin/bash
+
 #ss-tunnel 进程检测
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
 
 #载入配置文件
 . /Spectre/config.conf

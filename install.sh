@@ -1,6 +1,9 @@
 #!/bin/bash
 
-## Spectre 安装文件
+# Spectre 安装文件
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
+
 
 
 ## root 环境检查函数
@@ -21,13 +24,13 @@ IptableIntoCrontab(){
 			echo "是否进行 ipv4_CN iptable 的定时自动更新?(yes or no)"
 			read input
 			file_location=/Spectre/crontasks/Update-iptables.sh
-			  if [ "$input" == "yes" -o "$input" == "Yes" ]; then
+			if [ "$input" == "yes" -o "$input" == "Yes" ]; then
 			       #每个月总有那么一次
 				     echo '* * 1 * * sh root bash' $file_location '/dev/null 2>&1' >> /etc/cron.d/Update-iptables
 				     echo -e "写入 Crontab 完毕 时间设置每月定时更新"
 				else
 					   exit 0
-				fi
+			fi
 	fi
 }
 

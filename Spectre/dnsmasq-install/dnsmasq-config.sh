@@ -1,5 +1,8 @@
 #!/bin/bash
+
 # dnsmasq 导入配置脚本
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
 
 # 载入 Spectre 配置文件
 . /Spectre/config.conf
@@ -42,10 +45,8 @@ fi
 
 #复制已有的配置文件至 /etc/dnsmasq.d
 function importDnsmasqd(){
-
 #复制文件
 sudo cp -R /Spectre/dnsmasq.d /etc
-
 }
 
 

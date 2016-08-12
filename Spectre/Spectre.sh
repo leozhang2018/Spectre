@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
+
 ## root 环境检查函数
 function checkRoot(){
 if [ $UID -ne 0 ]; then

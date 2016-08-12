@@ -1,5 +1,10 @@
 #!/bin/bash
+
 # dnsmasq 导入配置脚本
+# @author leozhang2018 <leozhang2018@gmail.com> 
+# @license http://www.opensource.org/licenses/MIT
+
+
 
 # 载入 Spectre 配置文件
 . /Spectre/config.conf
